@@ -498,3 +498,18 @@ Floating chess pieces animation .floating-pieces {
 #board #promotionList.black li a.knight {
     background-position: 60% 100%;
 }
+
+/* For error popup text */
+#errorText {
+    color: black !important;
+}
+
+/* For end popup text */
+#endText {
+    color: black !important;
+}
+
+/* If the text is inside .overlay, make sure it also doesn't inherit white */
+.overlay {
+    color: black; /* Only if you want *all* overlay text black */
+}
