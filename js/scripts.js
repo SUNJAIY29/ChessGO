@@ -25,6 +25,8 @@ let black = new Player("black");
 
 let currentPlayer = white;
 
+document.getElementById("playerTurn").textContent = currentPlayer.color;
+
 let SquareObject = function(x, y, color, selected, element, piece){
 	this.x = x;
 	this.y = y;
