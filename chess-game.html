@@ -3,10 +3,13 @@
 <head>
 	<title>ChessGO</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/chess-game.css">
 </head>
 <body onload="setup();">
-<a href="welcome.html" class="back-button" onclick="showLanding()">← Back to Menu</a>
+<div class="button-container">
+    <a href="welcome.html" class="back-button" onclick="showLanding()">← Back to Menu</a>
+    <button class="restart-button" onclick="restartWindow()">⟳ Restart</button>
+</div>
 <p id="turnInfo">
   Player's turn: <b id="playerTurn"></b>
 </p>
@@ -39,7 +42,13 @@
 	</div>
 </section>
 
-<script type="text/javascript" src="js/scripts.js"></script>
+<footer class="footer">
+	<p>&copy; 2025 ChessGO - Classic Chess Game</p>
+	<p>PROJECT CREATED BY: S.SUNJAIY CCN - 3RD YEAR</p>
+	<p>REPORT PROBLEM:</p>
+	<p>Mail support: sunjaiy29@gmail.com</p>
+</footer>
 
+<script type="text/javascript" src="js/chess-game.js"></script>
 </body>
 </html>

@@ -1096,3 +1096,7 @@ let nextTurn = function(){
         document.getElementById("turnInfo").innerHTML = "Player's turn: <b>White</b>";
 	}
 }
+
+function restartWindow() {
+    location.reload();
+}
