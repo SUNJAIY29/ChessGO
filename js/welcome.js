@@ -5,7 +5,7 @@ function playChess() {
 
         function playWithRobot() {
             // Add your navigation logic here
-            // window.location.href = 'chess-ai.html';
+            window.location.href = 'chess-ai.html';
         }
 
         // Enhanced button interactions
