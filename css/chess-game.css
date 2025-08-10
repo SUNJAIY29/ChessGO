@@ -1,35 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background-color: #2c3e50;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
     color: white;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
+.chess-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    background-image:
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 50px,
+            rgba(255, 255, 255, 0.1) 50px,
+            rgba(255, 255, 255, 0.1) 100px),
+        repeating-linear-gradient(90deg,
+            transparent,
+            transparent 50px,
+            rgba(255, 255, 255, 0.1) 50px,
+            rgba(255, 255, 255, 0.1) 100px);
+    animation: chessboardMove 20s infinite linear;
+    z-index: -1;
+}
+
+@keyframes chessboardMove {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(100px, 100px);
+    }
+}
+
+.chess-piece {
+    font-size: 6rem;
+    margin-bottom: 2rem;
+    animation: bounce 2s infinite ease-in-out;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+.floating-pieces {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.floating-piece {
+    position: absolute;
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.1);
+    animation: float 15s infinite linear;
+}
+
+@keyframes float {
+    from {
+        transform: translateY(100vh) rotate(0deg);
+    }
+    to {
+        transform: translateY(-100px) rotate(360deg);
+    }
+}
+
+.floating-piece:nth-child(1) { left: 10%; animation-delay: 0s; }
+.floating-piece:nth-child(2) { left: 20%; animation-delay: -2s; }
+.floating-piece:nth-child(3) { left: 30%; animation-delay: -4s; }
+.floating-piece:nth-child(4) { left: 40%; animation-delay: -6s; }
+.floating-piece:nth-child(5) { left: 50%; animation-delay: -8s; }
+.floating-piece:nth-child(6) { left: 60%; animation-delay: -10s; }
+.floating-piece:nth-child(7) { left: 70%; animation-delay: -12s; }
+.floating-piece:nth-child(8) { left: 80%; animation-delay: -14s; }
+
 .button-container {
     display: flex;
     gap: 20px;
     align-items: center;
-    justify-content: center; /* center all buttons horizontally */
-    flex-wrap: wrap; /* allows wrapping if more buttons are added */
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
 }
 
 .back-button,
 .restart-button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     background: linear-gradient(45deg, #6c757d, #495057);
     color: white;
     border: none;
     border-radius: 25px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 16px;   /* force same size */
-    font-family: inherit; /* use same font as page */
+    font-size: 16px;
+    font-family: inherit;
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
+    min-width: 120px;
+    text-align: center;
 }
 
 .back-button:hover,
@@ -43,6 +137,7 @@ body {
     text-align: center;
     font-size: 18px;
     margin-bottom: 20px;
+    font-weight: bold;
 }
 
 /* Chess Board Styles */
@@ -51,24 +146,21 @@ body {
     grid-template-columns: repeat(8, 80px);
     grid-template-rows: repeat(8, 80px);
     gap: 0;
-    margin: 0 auto;
-    border: 2px solid #34495e;
+    margin: 20px auto;
+    border: 3px solid #34495e;
     position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 #board .square {
-    background-image: url("../img/pieces.png");
-    background-size: 600% 200%;
     width: 80px;
     height: 80px;
-    float: left;
     cursor: pointer;
-    z-index: 20;
     position: relative;
-}
-
-#board .square.empty {
-    background-image: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 }
 
 #board .square.light {
@@ -80,117 +172,146 @@ body {
 }
 
 #board .square.selected {
-    box-shadow: 0 0 2px #0000ff, 0 0 4px #0000ff inset;
-    z-index: 20;
+    box-shadow: inset 0 0 0 3px #0066ff;
+    background-color: rgba(0, 102, 255, 0.3) !important;
 }
 
-/* Black Pieces */
-#board .square.black-king {
-    background-position: 0% 100%;
+#board .square:hover {
+    opacity: 0.8;
 }
 
-#board .square.black-queen {
-    background-position: 20% 100%;
+/* Remove float property that was causing layout issues */
+#board .square.empty {
+    background-image: none;
 }
 
-#board .square.black-bishop {
-    background-position: 40% 100%;
+/* Piece sprites - Fixed background positioning */
+#board .square.black-king { 
+    background-image: url("../img/pieces.png");
+    background-size: 600% 200%;
+    background-position: 0% 100%; 
 }
-
-#board .square.black-knight {
-    background-position: 60% 100%;
+#board .square.black-queen { 
+    background-image: url("../img/pieces.png");
+    background-size: 600% 200%;
+    background-position: 20% 100%; 
 }
-
-#board .square.black-castle {
-    background-position: 80% 100%;
+#board .square.black-bishop { 
+    background-image: url("../img/pieces.png");
+    background-size: 600% 200%;
+    background-position: 40% 100%; 
 }
-
-#board .square.black-pawn {
-    background-position: 100% 100%;
+#board .square.black-knight { 
+    background-image: url("../img/pieces.png");
+    background-size: 600% 200%;
+    background-position: 60% 100%; 
+}
+#board .square.black-castle { 
+    background-image: url("../img/pieces.png");
+    background-size: 600% 200%;
+    background-position: 80% 100%; 
+}
+#board .square.black-pawn { 
+    background-image: url("../img/pieces.png");
+    background-size: 600% 200%;
+    background-position: 100% 100%; 
 }
 
 /* White Pieces */
-#board .square.white-king {
-    background-position: 0% 0%;
+#board .square.white-king { 
+    background-image: url("../img/pieces.png");
+    background-size: 600% 200%;
+    background-position: 0% 0%; 
 }
-
-#board .square.white-queen {
-    background-position: 20% 0%;
+#board .square.white-queen { 
+    background-image: url("../img/pieces.png");
+    background-size: 600% 200%;
+    background-position: 20% 0%; 
 }
-
-#board .square.white-bishop {
-    background-position: 40% 0%;
+#board .square.white-bishop { 
+    background-image: url("../img/pieces.png");
+    background-size: 600% 200%;
+    background-position: 40% 0%; 
 }
-
-#board .square.white-knight {
-    background-position: 60% 0%;
+#board .square.white-knight { 
+    background-image: url("../img/pieces.png");
+    background-size: 600% 200%;
+    background-position: 60% 0%; 
 }
-
-#board .square.white-castle {
-    background-position: 80% 0%;
+#board .square.white-castle { 
+    background-image: url("../img/pieces.png");
+    background-size: 600% 200%;
+    background-position: 80% 0%; 
 }
-
-#board .square.white-pawn {
-    background-position: 100% 0%;
+#board .square.white-pawn { 
+    background-image: url("../img/pieces.png");
+    background-size: 600% 200%;
+    background-position: 100% 0%; 
 }
 
 /* Game Overlay */
 #board .overlay {
-    background-color: rgba(0, 0, 0, 0.6);
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    z-index: 0;
-    opacity: 0;
-    -webkit-transition: all .3s ease-out;
-    -moz-transition: all .3s ease-out;
-    -ms-transition: all .3s ease-out;
-    -o-transition: all .3s ease-out;
-    transition: all .3s ease-out;
-}
-
-#board .overlay.show {
-    opacity: 1;
-    z-index: 100;
-}
-
-#board .overlay .overlay-inner {
+    background-color: rgba(0, 0, 0, 0.8);
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    margin: auto;
-    width: 400px;
-    height: 190px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#board .overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#board .overlay .overlay-inner {
     background: #fff;
     border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     text-align: center;
+    max-width: 400px;
+    width: 90%;
+    color: #333;
 }
 
 #board .overlay .overlay-title {
     display: block;
     font-weight: bold;
-    line-height: 32px;
-    font-size: 20px;
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
 }
 
 #board .overlay .overlay-text {
-    line-height: 22px;
     font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #666;
 }
 
 #board .overlay .overlay-button {
     display: inline-block;
-    line-height: 34px;
-    padding: 0 12px;
+    padding: 12px 24px;
     color: #fff;
-    background: #049eff;
-    border-radius: 5px;
+    background: linear-gradient(45deg, #049eff, #0288d1);
+    border-radius: 8px;
     text-decoration: none;
-    margin-top: 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#board .overlay .overlay-button:hover {
+    background: linear-gradient(45deg, #0288d1, #0277bd);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(4, 158, 255, 0.3);
 }
 
 /* Promotion List */
@@ -203,7 +324,7 @@ body {
 
 #board #promotionList li {
     display: inline-block;
-    padding: 0 5px;
+    padding: 0 8px;
 }
 
 #board #promotionList li a {
@@ -212,67 +333,42 @@ body {
     width: 60px;
     height: 60px;
     display: block;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+#board #promotionList li a:hover {
+    border-color: #049eff;
+    transform: scale(1.1);
 }
 
 /* White Promotion Pieces */
-#board #promotionList.white li a.queen {
-    background-position: 20% 0%;
-}
-
-#board #promotionList.white li a.castle {
-    background-position: 80% 0%;
-}
-
-#board #promotionList.white li a.bishop {
-    background-position: 40% 0%;
-}
-
-#board #promotionList.white li a.knight {
-    background-position: 60% 0%;
-}
+#board #promotionList.white li a.queen { background-position: 20% 0%; }
+#board #promotionList.white li a.castle { background-position: 80% 0%; }
+#board #promotionList.white li a.bishop { background-position: 40% 0%; }
+#board #promotionList.white li a.knight { background-position: 60% 0%; }
 
 /* Black Promotion Pieces */
-#board #promotionList.black li a.queen {
-    background-position: 20% 100%;
-}
+#board #promotionList.black li a.queen { background-position: 20% 100%; }
+#board #promotionList.black li a.castle { background-position: 80% 100%; }
+#board #promotionList.black li a.bishop { background-position: 40% 100%; }
+#board #promotionList.black li a.knight { background-position: 60% 100%; }
 
-#board #promotionList.black li a.castle {
-    background-position: 80% 100%;
-}
-
-#board #promotionList.black li a.bishop {
-    background-position: 40% 100%;
-}
-
-#board #promotionList.black li a.knight {
-    background-position: 60% 100%;
-}
-
-/* For error popup text */
-#errorText {
-    color: black !important;
-}
-
-/* For end popup text */
+/* Text color fixes for popups */
+#errorText,
 #endText {
-    color: black !important;
+    color: #333 !important;
 }
-
-/* If the text is inside .overlay, make sure it also doesn't inherit white */
-.overlay {
-    color: black;
-    /* Only if you want *all* overlay text black */
-}
-
 
 .footer {
-    margin-top: 20px;
+    margin-top: auto;
     text-align: center;
     border-top: 1px solid #34495e;
     background-color: #1a252f;
     color: #bdc3c7;
     width: 100%;
-    padding: 10px 0;
+    padding: 15px 0;
 }
 
 .footer p {
@@ -282,8 +378,32 @@ body {
 .footer a {
     color: #3498db;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .footer a:hover {
+    color: #5dade2;
     text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #board {
+        grid-template-columns: repeat(8, 60px);
+        grid-template-rows: repeat(8, 60px);
+    }
+    
+    #board .square {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .chess-piece {
+        font-size: 4rem;
+    }
+    
+    .button-container {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

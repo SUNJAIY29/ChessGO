@@ -1,54 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<title>ChessGO</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/chess-game.css">
 </head>
+
 <body onload="setup();">
-<div class="button-container">
-    <a href="index.html" class="back-button" onclick="showLanding()">← Back to Menu</a>
-    <button class="restart-button" onclick="restartWindow()">⟳ Restart</button>
-</div>
-<p id="turnInfo">
-  Player's turn: <b id="playerTurn"></b>
-</p>
-<section id="board">
-    <div class="overlay" id="promotionMessage">
-        <div class="overlay-inner">
-            <span class="overlay-title">Promotion!</span>
-            <p class="overlay-text" id="alertText"></p>
-            <ul id="promotionList" class="white">
-                <li><a href="#" class="promotion-button queen"  onclick="promote('queen');"></a></li>
-                <li><a href="#" class="promotion-button castle" onclick="promote('castle');"></a></li>
-                <li><a href="#" class="promotion-button bishop" onclick="promote('bishop');"></a></li>
-                <li><a href="#" class="promotion-button knight" onclick="promote('knight');"></a></li>
-            </ul>
-        </div>
-    </div>
-	<div class="overlay" id="errorMessage">
-		<div class="overlay-inner">
-			<span class="overlay-title">Error!</span>
-			<p class="overlay-text" id="errorText"></p>
-			<a href="#" class="overlay-button" onclick="closeError();">Close</a>
-		</div>
-	</div>
-	<div class="overlay" id="endMessage">
-		<div class="overlay-inner">
-			<span class="overlay-title">Game Over!</span>
-			<p class="overlay-text" id="endText"></p>
-			<a href="#" class="overlay-button" onclick="newGame();">New Game</a>
-		</div>
-	</div>
-</section>
+	<div class="chess-bg"></div>
 
-<footer class="footer">
-	<p>&copy; 2025 ChessGO - Classic Chess Game</p>
-	<p>PROJECT CREATED BY: S.SUNJAIY CCN - 3RD YEAR</p>
-	<p>REPORT PROBLEM:</p>
-	<p>Mail support: sunjaiy29@gmail.com</p>
-</footer>
+	<div class="floating-pieces">
+		<div class="floating-piece">♔</div>
+		<div class="floating-piece">♕</div>
+		<div class="floating-piece">♖</div>
+		<div class="floating-piece">♗</div>
+		<div class="floating-piece">♘</div>
+		<div class="floating-piece">♙</div>
+		<div class="floating-piece">♚</div>
+		<div class="floating-piece">♛</div>
+	</div>
+	<div class="button-container">
+		<a href="index.html" class="back-button" onclick="showLanding()">← Back to Menu</a>
+		<button class="restart-button" onclick="restartWindow()">⟳ Restart</button>
+	</div>
+	<p id="turnInfo">
+		Player's turn: <b id="playerTurn"></b>
+	</p>
+	<section id="board">
+		<div class="overlay" id="promotionMessage">
+			<div class="overlay-inner">
+				<span class="overlay-title">Promotion!</span>
+				<p class="overlay-text" id="alertText"></p>
+				<ul id="promotionList" class="white">
+					<li><a href="#" class="promotion-button queen" onclick="promote('queen');"></a></li>
+					<li><a href="#" class="promotion-button castle" onclick="promote('castle');"></a></li>
+					<li><a href="#" class="promotion-button bishop" onclick="promote('bishop');"></a></li>
+					<li><a href="#" class="promotion-button knight" onclick="promote('knight');"></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="overlay" id="errorMessage">
+			<div class="overlay-inner">
+				<span class="overlay-title">Error!</span>
+				<p class="overlay-text" id="errorText"></p>
+				<a href="#" class="overlay-button" onclick="closeError();">Close</a>
+			</div>
+		</div>
+		<div class="overlay" id="endMessage">
+			<div class="overlay-inner">
+				<span class="overlay-title">Game Over!</span>
+				<p class="overlay-text" id="endText"></p>
+				<a href="#" class="overlay-button" onclick="newGame();">New Game</a>
+			</div>
+		</div>
+	</section>
 
-<script type="text/javascript" src="js/chess-game.js"></script>
+	<footer class="footer">
+		<p>&copy; 2025 ChessGO - Classic Chess Game</p>
+		<p>PROJECT CREATED BY: S.SUNJAIY CCN - 3RD YEAR</p>
+		<p>REPORT PROBLEM:</p>
+		<p>Mail support: sunjaiy29@gmail.com</p>
+	</footer>
+
+	<script type="text/javascript" src="js/chess-game.js"></script>
 </body>
+
 </html>
